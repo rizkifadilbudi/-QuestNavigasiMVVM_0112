@@ -7,11 +7,12 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.praktikum6.view.FormIsian
 import com.example.praktikum6.view.TampilData
 
-enum class Navigasi {
+enum class Navigasi{
     FormulirSaya,
     Detail
 }
@@ -20,30 +21,32 @@ enum class Navigasi {
 fun DataApp(
     navController: NavHostController = rememberNavController()
 ){
-    Scaffold{isiRuang ->
-    NavHost(
-        NavController = navController,
-        starDestination = Navigasi.FormulirSaya.name,
+    Scaffold() {
+            isiRuang ->
+        NavHost(
+            navController = navController,
+            startDestination = Navigasi.FormulirSaya.name,
 
-        modifier = Modifier.padding(isiRuang)
-    ) {
-        composable(route = Navigasi.FormulirSaya.name){
-            FormIsian(
-                OnSubmitBtnClick = {
-                    navController.navigate(Navigasi.Detail.name)
-                }
-            )
+            modifier = Modifier.padding(isiRuang)){
+            composable(route = Navigasi.FormulirSaya.name){
+                FormIsian (
+                    OnSubmitBtnClick = {
+                        navController.navigate(Navigasi.Detail.name)
+                    }
+                )
+            }
+            composable(route = Navigasi.Detail.name){
+                TampilData (
+                    onBackBtnClick = {cancelAndBackToFormulirSaya(navController)
+                    }
+                )
+            }
         }
-        composable(route = Navigasi.Detail.name){
-            TampilData (
-                onBackBtnClick = {cancelAndBackToFormulirSaya(navController)}
-            )
-        }
-    }}
+    }
 }
 
-private fun cancelAndBackToFormulirSaya(
+fun cancelAndBackToFormulirSaya(
     navController: NavHostController
-) {
+){
     navController.popBackStack(Navigasi.FormulirSaya.name, inclusive = false)
 }
