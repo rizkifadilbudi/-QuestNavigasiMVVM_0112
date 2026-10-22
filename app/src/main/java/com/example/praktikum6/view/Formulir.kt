@@ -44,6 +44,51 @@ fun FormIsian(
             )
         )
     }) {
-
+        isiRuang ->
+        Column(modifier = Modifier.padding(paddingValues = isiRuang),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            OutlinedTextField(
+                value = "",
+                singleLine = true,
+                modifier = Modifier.padding(top = 20.dp).width(250.dp),
+                label = { Text(text = "Nama Lengkap") },
+                onValueChange = {},
+            )
+            HorizontalDivider(modifier = Modifier.padding(20.dp).width(250.dp), thickness = Thickness, color = Color.Red)
+            Row {
+                jenisK.forEach {
+                    item ->
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        RadioButton(
+                            selected = false,
+                            onClick = {item}
+                        )
+                        Text(text = item)
+                    }
+                }
+            }
+            HorizontalDivider(modifier = Modifier
+                .padding(20.dp)
+                .width(250.dp),
+                thickness = 1.dp,
+                color = Color.Red
+            )
+            OutlinedTextField(
+                value = "",
+                singleLine = true,
+                modifier = Modifier.padding(top = 20.dp).width(250.dp),
+                label = { Text(text = "Alamat") },
+                onValueChange = {},
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+            Button(
+                modifier = Modifier.fillMaxWidth(1f)
+                    .padding(25.dp),
+                onClick = OnSubmitBtnClick
+            ) {
+                Text(stringResource(R.string.submit))
+            }
+        }
     }
 }
